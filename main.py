@@ -1,3 +1,7 @@
+from pathlib import Path
+from lib import encode_to_base64
+
+
 def start_data_transfer() -> None:
     """Client algorithm
     1. read input
@@ -9,8 +13,8 @@ def start_data_transfer() -> None:
     1. print received
     1. log ok from server
     """
-
-    pass
+    path = Path().cwd() / "branch_weekly_sales.txt"
+    encoded_file = encode_to_base64(path.read_text())
 
 
 def main() -> None:
