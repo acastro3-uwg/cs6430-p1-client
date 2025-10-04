@@ -1,5 +1,6 @@
 from pathlib import Path
 from lib import encode_to_base64
+from tcp_client import Client
 
 
 def start_data_transfer() -> None:
@@ -15,6 +16,11 @@ def start_data_transfer() -> None:
     """
     path = Path().cwd() / "branch_weekly_sales.txt"
     encoded_file = encode_to_base64(path.read_text())
+    client = Client("127.0.0.1", 4242)
+    if client.is_connected:
+        print("connected to server")
+    # client.connect()
+    print(encoded_file)
 
 
 def main() -> None:
