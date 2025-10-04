@@ -1,0 +1,2 @@
+Branch code, product code, quantity sold, date sold
+ALBNM, PROD001, 12, 2023-01-01
