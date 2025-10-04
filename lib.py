@@ -1,3 +1,6 @@
+import base64
+
+
 def encode_to_base64(txt: str) -> bytes:
     """Accept a string, encode it in Base64, and return the encoded string.
 
@@ -7,4 +10,4 @@ def encode_to_base64(txt: str) -> bytes:
     Returns:
         bytes: The encoded string
     """
-    return b""
+    return base64.b64encode(txt.encode("ascii"))
