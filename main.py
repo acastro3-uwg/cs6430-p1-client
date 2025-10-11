@@ -33,6 +33,8 @@ def start_data_transfer() -> None:
         reply = client.recv(1024)
         loger.info(f"received: {reply.decode()}")
         client.send(b"~" + encoded_file + b"~")
+        reply = client.recv(1024)
+        loger.info(f"received: {reply.decode()}")
     else:
         print("no connection")
 
