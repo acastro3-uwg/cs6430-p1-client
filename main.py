@@ -1,6 +1,10 @@
 from pathlib import Path
 from lib import encode_to_base64, get_branch_name
 from tcp_client import Client
+from logging import getLogger, basicConfig, INFO, FileHandler, StreamHandler
+
+
+loger = getLogger(__name__)
 
 
 def start_data_transfer() -> None:
@@ -14,6 +18,7 @@ def start_data_transfer() -> None:
     1. print received
     1. log ok from server
     """
+
     path = Path().cwd() / "branch_weekly_sales.txt"
     file_text = path.read_text()
     branch_name = get_branch_name(file_text)
@@ -25,12 +30,21 @@ def start_data_transfer() -> None:
     if client.is_connected:
         print("connected to server")
         client.send(f"bcode~{branch_name}".encode("ascii"))
+        reply = client.recv(1024)
+        loger.info(f"received: {reply.decode()}")
     else:
         print("no connection")
 
 
 def main() -> None:
     """Entry point into the program."""
+    basicConfig(
+        format="%(asctime)s %(name)s %(levelname)s %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S",
+        level=INFO,
+        handlers=[FileHandler("project.log"), StreamHandler()],
+    )
+
     start_data_transfer()
 
 
