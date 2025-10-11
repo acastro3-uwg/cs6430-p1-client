@@ -32,6 +32,7 @@ def start_data_transfer() -> None:
         client.send(f"bcode~{branch_name}".encode("ascii"))
         reply = client.recv(1024)
         loger.info(f"received: {reply.decode()}")
+        client.send(b"~" + encoded_file + b"~")
     else:
         print("no connection")
 
