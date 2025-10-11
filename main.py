@@ -1,5 +1,5 @@
 from pathlib import Path
-from lib import encode_to_base64
+from lib import encode_to_base64, get_branch_name
 from tcp_client import Client
 
 
@@ -15,7 +15,11 @@ def start_data_transfer() -> None:
     1. log ok from server
     """
     path = Path().cwd() / "branch_weekly_sales.txt"
-    encoded_file = encode_to_base64(path.read_text())
+    file_text = path.read_text()
+    branch_name = get_branch_name(file_text)
+    print(branch_name)
+    encoded_file = encode_to_base64(file_text)
+
     client = Client("127.0.0.1", 4242)
     if client.is_connected:
         print("connected to server")
