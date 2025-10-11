@@ -1,4 +1,8 @@
 import base64
+from typing import Optional
+from re import compile
+
+branch_pattern = compile(r"(?<=\n).*?(?=,)")
 
 
 def encode_to_base64(txt: str) -> bytes:
@@ -11,3 +15,24 @@ def encode_to_base64(txt: str) -> bytes:
         bytes: The encoded string
     """
     return base64.b64encode(txt.encode("ascii"))
+
+
+def get_branch_name(txt: str) -> Optional[str]:
+    """Find branch name given a CSV file following the format:
+
+    Branch code, product code, quantity sold, date sold
+    ALBNM, PROD001, 12, 2023-01-01
+
+    Args:
+        txt (str): File content
+
+    Returns:
+        str: The branch name
+    """
+    match = branch_pattern.search(txt)
+
+    result = None
+    if match is not None:
+        result = match.group(0)
+
+    return result
