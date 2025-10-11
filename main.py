@@ -21,10 +21,12 @@ def start_data_transfer() -> None:
     encoded_file = encode_to_base64(file_text)
 
     client = Client("127.0.0.1", 4242)
+    client.connect()
     if client.is_connected:
         print("connected to server")
-    # client.connect()
-    print(encoded_file)
+        client.send(f"bcode~{branch_name}".encode("ascii"))
+    else:
+        print("no connection")
 
 
 def main() -> None:
