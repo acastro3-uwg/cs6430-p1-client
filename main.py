@@ -22,19 +22,19 @@ def start_data_transfer() -> None:
     path = Path().cwd() / "branch_weekly_sales.txt"
     file_text = path.read_text()
     branch_name = get_branch_name(file_text)
-    print(branch_name)
     encoded_file = encode_to_base64(file_text)
 
     client = Client("127.0.0.1", 4242)
     client.connect()
     if client.is_connected:
-        print("connected to server")
+        loger.info("connected to server")
         client.send(f"bcode~{branch_name}".encode("ascii"))
         reply = client.recv(1024)
         loger.info(f"received: {reply.decode()}")
-        client.send(b"~" + encoded_file + b"~")
-        reply = client.recv(1024)
-        loger.info(f"received: {reply.decode()}")
+        if reply.decode() == "OK":
+            client.send(b"~" + encoded_file + b"~")
+            reply = client.recv(1024)
+            loger.info(f"received: {reply.decode()}")
     else:
         print("no connection")
 
