@@ -1,8 +1,8 @@
 import base64
 from typing import Optional
-from re import compile
+from re import compile, MULTILINE
 
-branch_pattern = compile(r"(?<=\n).*?(?=,)")
+branch_pattern = compile(r"^([^,]+).*.\d{4}-\d{0,2}-\d{0,2}", MULTILINE)
 
 
 def encode_to_base64(txt: str) -> bytes:
