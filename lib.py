@@ -33,6 +33,6 @@ def get_branch_name(txt: str) -> Optional[str]:
 
     result = None
     if match is not None:
-        result = match.group(0)
+        result = match.group(1)
 
     return result
